@@ -14,7 +14,7 @@ on:
       - Main
       - main
     paths:
-      - 'src/bakehouse_analytics/**'
+      - 'bakehouse_analytics/**'
 
 jobs:
   deploy:
