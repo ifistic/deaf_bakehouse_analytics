@@ -12,6 +12,7 @@ on:
   push:
     branches:
       - Main
+      - main
     paths:
       - 'bakehouse_analytics/**'
 
