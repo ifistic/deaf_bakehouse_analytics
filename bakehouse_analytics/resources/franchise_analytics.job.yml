@@ -1,0 +1,43 @@
+resources:
+  jobs:
+    franchise_analytics:
+      name: franchise_analytics
+      tasks:
+        - task_key: franchise_analytics
+          email_notifications: {}
+          environment_key: Default
+          notebook_task:
+            notebook_path: ../src/franchise_analytics/Franchise.ipynb
+            source: WORKSPACE
+          run_if: ALL_SUCCESS
+          timeout_seconds: 0
+          webhook_notifications: {}
+        - task_key: banking_task
+          depends_on:
+            - task_key: franchise_analytics
+          email_notifications: {}
+          notebook_task:
+            notebook_path: ../src/franchise_analytics/creating of metadata.ipynb
+            source: WORKSPACE
+          run_if: ALL_SUCCESS
+          timeout_seconds: 0
+          webhook_notifications: {}
+      parameters:
+        - name: catalog
+          default: bakehouse_analytics_dev
+        - name: run_id
+          default: '{{job.run_id}}'
+        - name: schema
+          default: md
+      email_notifications:
+        no_alert_for_skipped_runs: false
+      environments:
+        - environment_key: Default
+          spec:
+            environment_version: "5"
+      max_concurrent_runs: 1
+      performance_target: PERFORMANCE_OPTIMIZED
+      queue:
+        enabled: true
+      timeout_seconds: 0
+      webhook_notifications: {}
